@@ -1,0 +1,7 @@
+// Andorra 3D model bounds
+private final LatLon[] ROI = new LatLon[] {
+  new LatLon(42.681138, 1.379565),  // TL
+  new LatLon(42.681138, 1.808963),  // TR
+  new LatLon(42.408173, 1.808963),  // BR
+  new LatLon(42.408173, 1.379565)   // BL
+};
