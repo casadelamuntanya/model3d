@@ -7,7 +7,9 @@ public class SceneCollection extends ArrayList<Scene> implements ScenesIterable 
   }
 
   public void goTo(int target) {
+    get(currentScene).onLeave();
     currentScene = (size() + target) % size();
+    get(currentScene).onEnter();
   }
 
   public void prev() {
