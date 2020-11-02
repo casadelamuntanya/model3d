@@ -29,6 +29,8 @@ public class Dictionary {
   }
   
   public String get(String key, String language) {
-    return DICTIONARIES.get(language).get(key);
+    return DICTIONARIES.containsKey(language) && DICTIONARIES.get(language).hasKey(key)
+      ? DICTIONARIES.get(language).get(key)
+      : language + "." + key;
   }
 }
