@@ -4,47 +4,53 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.Coordinate;
 
-public abstract class FeatureDrawer implements Drawer<Feature> {
-  
-  public abstract void draw(Feature feature);
-  
-  protected void drawGeometry(Geometry geometry) {
-    if (geometry instanceof GeometryCollection) drawGeometry((GeometryCollection) geometry);
-    else if (geometry instanceof Polygon) drawGeometry((Polygon) geometry);
-    else if (geometry instanceof LineString) drawGeometry((LineString) geometry);
-    else if (geometry instanceof Point) drawGeometry((Point) geometry);
+public class FeatureDrawer implements Drawer<Feature> {
+
+  public void draw(Feature feature) {
+    draw(feature.GEOMETRY);
+  }
+
+  protected void draw(Geometry geometry) {
+    if (geometry instanceof GeometryCollection) draw((GeometryCollection) geometry);
+    else if (geometry instanceof Polygon) draw((Polygon) geometry);
+    else if (geometry instanceof LineString) draw((LineString) geometry);
+    else if (geometry instanceof Point) draw((Point) geometry);
   }
   
-  protected void drawGeometry(GeometryCollection geometry) {
+  protected void draw(GeometryCollection geometry) {
     for (int i = 0; i < geometry.getNumGeometries(); i++) {
-      drawGeometry(geometry.getGeometryN(i));
+      draw(geometry.getGeometryN(i));
     }
   }
   
-  protected void drawGeometry(Polygon geometry) {
+  protected void draw(Polygon geometry) {
     LineString shell = geometry.getExteriorRing();
     beginShape();
-    for (Coordinate coord : shell.getCoordinates()) vertex((float)coord.x, (float)coord.y);
+    for (Coordinate coord : shell.getCoordinates()) {
+      vertex((float)coord.x, (float)coord.y);
+    }
     for (int i = 0; i < geometry.getNumInteriorRing(); i++) {
       LineString hole = geometry.getInteriorRingN(i);
       beginContour();
-      for (Coordinate coord : hole.getCoordinates()) vertex((float)coord.x, (float)coord.y);
+      for (Coordinate coord : hole.getCoordinates()) {
+        vertex((float)coord.x, (float)coord.y);
+      }
       endContour();
     }
     endShape(CLOSE);
   }
   
-  protected void drawGeometry(LineString geometry) {
-    PVector prev = null;
-    for (Coordinate coordinate : geometry.getCoordinates()) {
-      if (prev != null) line(prev.x, prev.y, (float)coordinate.x, (float)coordinate.y);
-      prev = new PVector((float)coordinate.x, (float)coordinate.y);
+  protected void draw(LineString geometry) {
+    beginShape();
+    noFill();
+    for (Coordinate coord : geometry.getCoordinates()) {
+      vertex((float)coord.x, (float)coord.y);
     }
+    endShape();
   }
   
-  protected void drawGeometry(Point geometry) {
+  protected void draw(Point geometry) {
     Coordinate coordinate = geometry.getCoordinate();
     point((float)coordinate.x, (float)coordinate.y);
   }
-  
 }
