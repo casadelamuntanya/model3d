@@ -21,7 +21,7 @@ public class FeatureFactoryGeoJSON implements Factory<Feature> {
   }
   
   public Facade<Feature> load(String source) {
-    Facade<Feature> facade = new Facade(this);
+    Facade<Feature> facade = new Facade();
     JSONObject json = loadJSONObject(source);
     JSONArray features = json.getJSONArray("features");
     for (int i = 0; i < features.size(); i++) {

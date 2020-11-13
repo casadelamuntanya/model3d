@@ -1,6 +1,6 @@
 import com.vividsolutions.jts.geom.Geometry;
 
-public class Feature {
+public class Feature implements Categorizable {
   
   public final int ID;
   public final JSONObject PROPERTIES;
@@ -14,5 +14,9 @@ public class Feature {
   
   public boolean contains(Geometry geometry) {
     return GEOMETRY.contains(geometry);
+  }
+  
+  public Object getProperty(String property) {
+    return PROPERTIES.get(property);
   }
 }

@@ -1,46 +1,30 @@
-public class SceneCollection implements Scene {
+public class SceneCollection extends ArrayList<Scene> implements ScenesIterable {
   
-  private final ArrayList<Scene> SCENES = new ArrayList();
-  private int currentScene = 0;
+  protected int currentScene = 0;
 
-  public SceneCollection(Scene... scenes) {
-    for (Scene scene : scenes) SCENES.add(scene);
-  }
-  
-  public int size() {
-    return SCENES.size();
-  }
-  
   public int current() {
     return currentScene;
   }
-  
-  public boolean add(Scene scene) {
-    return SCENES.add(scene);
+
+  public void goTo(int target) {
+    get(currentScene).onLeave();
+    currentScene = (size() + target) % size();
+    get(currentScene).onEnter();
   }
-  
-  public void goTo(int targetScene) {  
-    currentScene = (SCENES.size() + targetScene) % SCENES.size();
-  }
-  
-  public void next() {
-    goTo(currentScene + 1);
-  }
-  
+
   public void prev() {
     goTo(currentScene - 1);
   }
-  
-  public void addIterator(SceneCollectionIterator iterator) {
-    iterator.register(this);
+
+  public void next() {
+    goTo(currentScene + 1);
   }
-  
-  @Override
+
   public void draw() {
     pushStyle();
-    
-    SCENES.get(currentScene).draw();
-    
+    get(currentScene).draw();
+    textAlign(RIGHT, BOTTOM);
+    text(currentScene + 1 + " / " + size(), 1495, 1050);
     popStyle();
   }
 
