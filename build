@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# exit if any command fails
+set -e
+# clean up when exit
+trap 'rm -rf ad' EXIT
+
+# compile .java files to .class
+javac -cp /Applications/Processing.app/Contents/Java/core/library/core.jar:./src/code/jts.jar:./src/code/warp.jar -nowarn -source 1.6 -target 1.6 -d . ./src/*.java
+
+# create library jar
+jar cvf model3d.jar ad
+mkdir -p library
+mv model3d.jar library/model3d.jar
