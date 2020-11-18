@@ -1,4 +1,8 @@
+package ad.casadelamuntanya.model3d.feature;
+
+import processing.data.JSONObject;
 import com.vividsolutions.jts.geom.Geometry;
+import ad.casadelamuntanya.model3d.Categorizable;
 
 public class Feature implements Categorizable {
   

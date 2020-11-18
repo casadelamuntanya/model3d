@@ -1,3 +1,8 @@
+package ad.casadelamuntanya.model3d.scene;
+
+import processing.core.PApplet;
+import processing.event.KeyEvent;
+
 public class ScenesIteratorKeyboard extends ScenesIterator {
 
   private final int KEY_PREV;

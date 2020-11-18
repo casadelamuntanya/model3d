@@ -1,3 +1,9 @@
+package ad.casadelamuntanya.model3d;
+
+import java.util.HashMap;
+import processing.core.PGraphics;
+import ad.casadelamuntanya.model3d.Categorizable;
+
 public class CategoryDrawer<T> implements Drawer<Categorizable> {
 
   protected final Drawer DRAWER;
@@ -17,17 +23,17 @@ public class CategoryDrawer<T> implements Drawer<Categorizable> {
   }
   
   @Override
-  public void draw(Categorizable item) {
-    pushMatrix();
-    pushStyle();
+  public void draw(PGraphics renderer, Categorizable item) {
+    renderer.pushMatrix();
+    renderer.pushStyle();
     T key = (T) item.getProperty(PROPERTY);
     if (COLORS.containsKey(key)) {
-      fill(COLORS.get(key), STROKE_WEIGHT != 0 ? 200 : 255);
-      stroke(COLORS.get(key));
-      strokeWeight(STROKE_WEIGHT);
+      renderer.fill(COLORS.get(key), STROKE_WEIGHT != 0 ? 200 : 255);
+      renderer.stroke(COLORS.get(key));
+      renderer.strokeWeight(STROKE_WEIGHT);
     }
-    DRAWER.draw(item);
-    popStyle();
-    popMatrix();
+    DRAWER.draw(renderer, item);
+    renderer.popStyle();
+    renderer.popMatrix();
   }
 }

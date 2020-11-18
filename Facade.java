@@ -1,7 +1,11 @@
+package ad.casadelamuntanya.model3d;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.Predicate;
+import processing.core.PGraphics;
 
 public class Facade<T> implements Iterable<T> {
 
@@ -49,9 +53,9 @@ public class Facade<T> implements Iterable<T> {
     Collections.sort(ITEMS, comparator);
   }
   
-  public void draw() {
+  public void draw(PGraphics renderer) {
     if (drawer != null) {
-      for (T item : ITEMS) drawer.draw(item);
+      for (T item : ITEMS) drawer.draw(renderer, item);
     }
   }
   

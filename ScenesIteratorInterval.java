@@ -1,9 +1,16 @@
+package ad.casadelamuntanya.model3d.scene;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import processing.core.PApplet;
+import processing.core.PGraphics;
+import processing.event.KeyEvent;
+
 public class ScenesIteratorInterval extends ScenesIterator {
 
+  private final PApplet PAPPLET;
   private final long INTERVAL;
   private final int KEY_PAUSE_RESUME;
   private ScheduledExecutorService scheduler;
@@ -13,18 +20,25 @@ public class ScenesIteratorInterval extends ScenesIterator {
 
   public ScenesIteratorInterval(PApplet papplet, long interval, int keyPauseResume, ScenesIterable scenes) {
     super(scenes);
+    PAPPLET = papplet;
     INTERVAL = interval;
     KEY_PAUSE_RESUME = keyPauseResume;
     papplet.registerMethod("keyEvent", this);
   }
 
-  public void run() {
+  @Override
+  public void init() {
+    run();
+    super.init();
+  }
+
+  protected void run() {
     isRunning = true;
     lastTime = System.nanoTime();
     final Runnable next = new Runnable() {
       public void run() {
         next();
-        lastTime = System.nanoTime();
+        lastTime = PAPPLET.millis();
       }
     };
     scheduler = Executors.newScheduledThreadPool(1);
@@ -47,13 +61,14 @@ public class ScenesIteratorInterval extends ScenesIterator {
   }
 
   @Override
-  public void draw() {
-    pushStyle();
-    super.draw();
-    if (isRunning) currentTime = System.nanoTime();
-    long remaining = TimeUnit.MILLISECONDS.convert(currentTime - lastTime, TimeUnit.NANOSECONDS) - INTERVAL;
-    fill(#ffffff);
-    rect(1500, 1056, map(remaining, 0, INTERVAL, 0, 1157), 2);
-    popStyle();
+  public void draw(PGraphics renderer) {
+    renderer.pushStyle();
+    super.draw(renderer);
+    if (isRunning) currentTime = PAPPLET.millis();
+    // long remaining = TimeUnit.MILLISECONDS.convert(currentTime - lastTime, TimeUnit.NANOSECONDS) - INTERVAL;
+    long remaining = currentTime - lastTime - INTERVAL;
+    renderer.fill(255);
+    renderer.rect(1500, 1056, PApplet.map(remaining, 0, INTERVAL, 0, 1157), 2);
+    renderer.popStyle();
   }
 }

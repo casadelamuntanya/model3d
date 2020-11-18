@@ -1,4 +1,8 @@
-public static class FeaturePredicates {
+package ad.casadelamuntanya.model3d.feature;
+
+import java.util.function.Predicate;
+
+public class FeaturePredicates {
 
   public static Predicate<Feature> filterByProperty(final String property, final String... values) {
     return new Predicate<Feature>() {
