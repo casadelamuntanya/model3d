@@ -32,7 +32,7 @@ public class Facade<T> implements Iterable<T> {
     for (T item : items) ITEMS.remove(item);
   }
   
-  public Facade<T> filter(Predicate<T> filter) {
+  public Facade<T> filter(Predicate filter) {
     Facade<T> facade = new Facade<T>();
     facade.setDrawer(drawer);
     for (T item : ITEMS) {
@@ -41,8 +41,7 @@ public class Facade<T> implements Iterable<T> {
     return facade;
   }
 
-
-  public T find(Predicate<T> finder) {
+  public T find(Predicate finder) {
     for (T item : ITEMS) {
       if (finder.test(item)) return item;
     }
