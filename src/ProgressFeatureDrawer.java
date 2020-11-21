@@ -7,7 +7,7 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-public class FeatureWalkDrawer extends FeatureDrawer {
+public class ProgressFeatureDrawer extends FeatureDrawer {
 
   protected final PApplet PAPPLET;
   protected final FeatureDrawer DRAWER;
@@ -15,14 +15,14 @@ public class FeatureWalkDrawer extends FeatureDrawer {
   protected final int START_TIME;
   protected int HEAD_SIZE = 0;
   
-  public FeatureWalkDrawer(PApplet papplet, FeatureDrawer drawer, float speed) {
+  public ProgressFeatureDrawer(PApplet papplet, FeatureDrawer drawer, float speed) {
     PAPPLET = papplet;
     DRAWER = drawer;
     SPEED = speed / 1000;
     START_TIME = PAPPLET.millis();
   }
   
-  public FeatureWalkDrawer head(int size) {
+  public ProgressFeatureDrawer head(int size) {
     HEAD_SIZE = size;
     return this;
   }
