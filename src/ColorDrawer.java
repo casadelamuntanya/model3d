@@ -20,13 +20,13 @@ public class ColorDrawer<T> implements Drawer<T> {
   }
   
   @Override
-  public void draw(PGraphics renderer, T feature) {
+  public void draw(PGraphics renderer, T element) {
     renderer.pushMatrix();
     renderer.pushStyle();
     renderer.fill(COLOR, STROKE_WEIGHT != 0 ? 200 : 255);
     renderer.stroke(COLOR);
     renderer.strokeWeight(STROKE_WEIGHT);
-    DRAWER.draw(renderer, feature);
+    DRAWER.draw(renderer, element);
     renderer.popStyle();
     renderer.popMatrix();
   }

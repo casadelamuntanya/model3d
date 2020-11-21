@@ -23,16 +23,16 @@ public class CategoryDrawer<T> implements Drawer<Categorizable> {
   }
   
   @Override
-  public void draw(PGraphics renderer, Categorizable item) {
+  public void draw(PGraphics renderer, Categorizable element) {
     renderer.pushMatrix();
     renderer.pushStyle();
-    T key = (T) item.getProperty(PROPERTY);
+    T key = (T) element.getProperty(PROPERTY);
     if (COLORS.containsKey(key)) {
       renderer.fill(COLORS.get(key), STROKE_WEIGHT != 0 ? 200 : 255);
       renderer.stroke(COLORS.get(key));
       renderer.strokeWeight(STROKE_WEIGHT);
     }
-    DRAWER.draw(renderer, item);
+    DRAWER.draw(renderer, element);
     renderer.popStyle();
     renderer.popMatrix();
   }
