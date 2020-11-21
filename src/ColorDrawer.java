@@ -7,16 +7,16 @@ public class ColorDrawer<T> implements Drawer<T> {
   
   protected final Drawer DRAWER;
   protected final int COLOR;
-  protected final int STROKE_WEIGHT;
-  
-  public ColorDrawer(Drawer drawer, int paint, int strokeWeight) {
-    DRAWER = drawer;
-    COLOR = paint;
-    STROKE_WEIGHT = strokeWeight;
-  }
+  protected int STROKE_WEIGHT = 1;
   
   public ColorDrawer(Drawer drawer, int paint) {
-    this(drawer, paint, 1);
+    DRAWER = drawer;
+    COLOR = paint;
+  }
+  
+  public ColorDrawer strokeWeight(int weight) {
+    STROKE_WEIGHT = weight;
+    return this;
   }
   
   @Override

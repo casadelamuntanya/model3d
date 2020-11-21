@@ -9,17 +9,17 @@ public class CategoryDrawer<T> implements Drawer<Categorizable> {
   protected final Drawer DRAWER;
   protected final String PROPERTY;
   protected final HashMap<T, Integer> COLORS;
-  protected final int STROKE_WEIGHT;
+  protected int STROKE_WEIGHT = 1;
   
-  public CategoryDrawer(Drawer drawer, String property, HashMap colors, int strokeWeight) {
+  public CategoryDrawer(Drawer drawer, String property, HashMap colors) {
     DRAWER = drawer;
     PROPERTY = property;
     COLORS = colors;
-    STROKE_WEIGHT = strokeWeight;
   }
   
-  public CategoryDrawer(Drawer drawer, String property, HashMap colors) {
-    this(drawer, property, colors, 1);
+  public CategoryDrawer strokeWeight(int weight) {
+    STROKE_WEIGHT = weight;
+    return this;
   }
   
   @Override

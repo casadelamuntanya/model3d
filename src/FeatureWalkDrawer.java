@@ -12,19 +12,19 @@ public class FeatureWalkDrawer extends FeatureDrawer {
   protected final PApplet PAPPLET;
   protected final FeatureDrawer DRAWER;
   protected final float SPEED;
-  protected final int HEAD_SIZE;
   protected final int START_TIME;
+  protected int HEAD_SIZE = 0;
   
-  public FeatureWalkDrawer(PApplet papplet, FeatureDrawer drawer, float speed, int headSize) {
+  public FeatureWalkDrawer(PApplet papplet, FeatureDrawer drawer, float speed) {
     PAPPLET = papplet;
     DRAWER = drawer;
     SPEED = speed / 1000;
-    HEAD_SIZE = headSize;
     START_TIME = PAPPLET.millis();
   }
   
-  public FeatureWalkDrawer(PApplet papplet, FeatureDrawer drawer, float speed) {
-    this(papplet, drawer, speed, 0);
+  public FeatureWalkDrawer head(int size) {
+    HEAD_SIZE = size;
+    return this;
   }
   
   @Override
