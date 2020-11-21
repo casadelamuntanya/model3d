@@ -1,4 +1,7 @@
+package ad.casadelamuntanya.model3d.feature;
+
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -7,22 +10,28 @@ import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Coordinate;
-
-public enum GeometryType { Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection }
+import com.vividsolutions.jts.geom.CoordinateSequenceFilter;
+import processing.core.PApplet;
+import processing.data.JSONObject;
+import processing.data.JSONArray;
+import ad.casadelamuntanya.model3d.Factory;
+import ad.casadelamuntanya.model3d.Facade;
 
 public class FeatureFactoryGeoJSON implements Factory<Feature> {
-  
+
+  private final PApplet PAPPLET;
   private final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory();
   private final CoordinateSequenceFilter MAPPER;
   private int counter = 0;
   
-  public FeatureFactoryGeoJSON(CoordinateSequenceFilter mapper) {
+  public FeatureFactoryGeoJSON(PApplet papplet, CoordinateSequenceFilter mapper) {
+    PAPPLET = papplet;
     MAPPER = mapper;
   }
   
   public Facade<Feature> load(String source) {
     Facade<Feature> facade = new Facade();
-    JSONObject json = loadJSONObject(source);
+    JSONObject json = PAPPLET.loadJSONObject(source);
     JSONArray features = json.getJSONArray("features");
     for (int i = 0; i < features.size(); i++) {
       JSONObject feature = features.getJSONObject(i);

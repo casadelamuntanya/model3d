@@ -1,3 +1,8 @@
+package ad.casadelamuntanya.model3d.locale;
+
+import java.util.HashMap;
+import processing.data.StringDict;
+
 public class Dictionary {
   private final HashMap<String, StringDict> DICTIONARIES;
   private String defaultLanguage;

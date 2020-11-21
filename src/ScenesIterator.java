@@ -1,9 +1,19 @@
-public abstract class ScenesIterator implements ScenesIterable {
+package ad.casadelamuntanya.model3d.scene;
+
+import processing.core.PConstants;
+import processing.core.PGraphics;
+
+public abstract class ScenesIterator implements PConstants, ScenesIterable {
   
   private final ScenesIterable SCENES;
   
   public ScenesIterator(ScenesIterable scenes) {
     SCENES = scenes;
+  }
+  
+  @Override
+  public void init() {
+    SCENES.init();
   }
   
   @Override
@@ -27,7 +37,7 @@ public abstract class ScenesIterator implements ScenesIterable {
   }
   
   @Override
-  public void draw() {
-    SCENES.draw();
+  public void draw(PGraphics renderer) {
+    SCENES.draw(renderer);
   }
 }
