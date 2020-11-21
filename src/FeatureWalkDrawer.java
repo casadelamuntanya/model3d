@@ -48,7 +48,7 @@ public class FeatureWalkDrawer extends FeatureDrawer {
   private boolean drawLineProgress(PGraphics renderer, LineString ring, float INIT_TIME) {
     final float RUN_DISTANCE = (PAPPLET.millis() - INIT_TIME) * SPEED;
     final boolean IS_FINISHED = RUN_DISTANCE > ring.getLength();
-    int progress = 0;
+    double progress = 0;
     boolean overflow = false;
     PVector prevVertex = null;
     for (Coordinate coord : ring.getCoordinates()) {
@@ -57,7 +57,7 @@ public class FeatureWalkDrawer extends FeatureDrawer {
         PVector segment = PVector.sub(vertex, prevVertex);
         progress += segment.mag();
         overflow = progress > RUN_DISTANCE;
-        if (overflow) vertex.sub(segment.setMag(progress - RUN_DISTANCE));
+        if (overflow) vertex.sub(segment.setMag((float) progress - RUN_DISTANCE));
       }
       renderer.vertex(vertex.x, vertex.y);
       prevVertex = vertex;
