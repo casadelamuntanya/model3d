@@ -12,20 +12,27 @@ public class FeatureWalkDrawer extends FeatureDrawer {
   protected final PApplet PAPPLET;
   protected final FeatureDrawer DRAWER;
   protected final float SPEED;
+  protected final int HEAD_SIZE;
   protected final int START_TIME;
   
-  public FeatureWalkDrawer(PApplet papplet, FeatureDrawer drawer, float speed) {
+  public FeatureWalkDrawer(PApplet papplet, FeatureDrawer drawer, float speed, int headSize) {
     PAPPLET = papplet;
     DRAWER = drawer;
     SPEED = speed / 1000;
+    HEAD_SIZE = headSize;
     START_TIME = PAPPLET.millis();
+  }
+  
+  public FeatureWalkDrawer(PApplet papplet, FeatureDrawer drawer, float speed) {
+    this(papplet, drawer, speed, 0);
   }
   
   @Override
   protected void draw(PGraphics renderer, Polygon geometry) {
+    final float DELAY = START_TIME + (float)geometry.getExteriorRing().getLength() / SPEED;
     renderer.beginShape();
-    if (drawLineProgress(renderer, geometry.getExteriorRing(), START_TIME)) {
-      final float DELAY = START_TIME + (float)geometry.getExteriorRing().getLength() / SPEED;
+    drawLineProgress(renderer, geometry.getExteriorRing(), START_TIME);
+    if (PAPPLET.millis() > DELAY) {
       for (int i = 0; i < geometry.getNumInteriorRing(); i++) {
         renderer.beginContour();
         drawLineProgress(renderer, geometry.getInteriorRingN(i), DELAY);
@@ -40,12 +47,17 @@ public class FeatureWalkDrawer extends FeatureDrawer {
     renderer.pushStyle();
     renderer.noFill();
     renderer.beginShape();
-    drawLineProgress(renderer, geometry, START_TIME);
+    PVector head = drawLineProgress(renderer, geometry, START_TIME);
     renderer.endShape();
+    if (HEAD_SIZE > 0 && head != null) {
+      renderer.fill(renderer.strokeColor);
+      renderer.noStroke();
+      renderer.circle(head.x, head.y, HEAD_SIZE);
+    }
     renderer.popStyle();
   }
   
-  private boolean drawLineProgress(PGraphics renderer, LineString ring, float INIT_TIME) {
+  private PVector drawLineProgress(PGraphics renderer, LineString ring, float INIT_TIME) {
     final float RUN_DISTANCE = (PAPPLET.millis() - INIT_TIME) * SPEED;
     final boolean IS_FINISHED = RUN_DISTANCE > ring.getLength();
     double progress = 0;
@@ -63,6 +75,6 @@ public class FeatureWalkDrawer extends FeatureDrawer {
       prevVertex = vertex;
       if (overflow) break;
     }
-    return IS_FINISHED;
+    return prevVertex;
   }
 }
