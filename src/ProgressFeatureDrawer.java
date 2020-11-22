@@ -10,14 +10,12 @@ import processing.core.PVector;
 public class ProgressFeatureDrawer extends FeatureDrawer {
 
   protected final PApplet PAPPLET;
-  protected final FeatureDrawer DRAWER;
   protected final float SPEED;
   protected final int START_TIME;
   protected int HEAD_SIZE = 0;
   
-  public ProgressFeatureDrawer(PApplet papplet, FeatureDrawer drawer, float speed) {
+  public ProgressFeatureDrawer(PApplet papplet, float speed) {
     PAPPLET = papplet;
-    DRAWER = drawer;
     SPEED = speed / 1000;
     START_TIME = PAPPLET.millis();
   }
