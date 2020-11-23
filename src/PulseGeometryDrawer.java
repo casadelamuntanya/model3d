@@ -11,8 +11,8 @@ public class PulseGeometryDrawer extends GeometryDrawer {
   protected final PApplet PAPPLET;
   protected final int SIZE;
   protected final int RADIUS;
-  protected float SPEED = 1;
-  protected float DUTY_CYCLE = 1;
+  protected float SPEED = 0.025f;
+  protected float DUTY_CYCLE = 0.5f;
   protected final int COLOR;
   
   public PulseGeometryDrawer(PApplet papplet, int size, int radius, int paint) {
