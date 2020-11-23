@@ -1,4 +1,4 @@
-package ad.casadelamuntanya.model3d.feature;
+package ad.casadelamuntanya.model3d;
 
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
@@ -8,15 +8,10 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Coordinate;
 import processing.core.PConstants;
 import processing.core.PGraphics;
-import ad.casadelamuntanya.model3d.Drawer;
 
-public class FeatureDrawer implements PConstants, Drawer<Feature> {
+public class GeometryDrawer implements PConstants, Drawer<Geometry> {
 
-  public void draw(PGraphics renderer, Feature feature) {
-    draw(renderer, feature.GEOMETRY);
-  }
-
-  protected void draw(PGraphics renderer, Geometry geometry) {
+  public void draw(PGraphics renderer, Geometry geometry) {
     if (geometry instanceof GeometryCollection) draw(renderer, (GeometryCollection) geometry);
     else if (geometry instanceof Polygon) draw(renderer, (Polygon) geometry);
     else if (geometry instanceof LineString) draw(renderer, (LineString) geometry);

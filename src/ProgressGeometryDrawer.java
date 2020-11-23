@@ -1,4 +1,4 @@
-package ad.casadelamuntanya.model3d.feature;
+package ad.casadelamuntanya.model3d;
 
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.LineString;
@@ -7,20 +7,20 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-public class ProgressFeatureDrawer extends FeatureDrawer {
+public class ProgressGeometryDrawer extends GeometryDrawer {
 
   protected final PApplet PAPPLET;
   protected final float SPEED;
   protected final int START_TIME;
   protected int HEAD_SIZE = 0;
   
-  public ProgressFeatureDrawer(PApplet papplet, float speed) {
+  public ProgressGeometryDrawer(PApplet papplet, float speed) {
     PAPPLET = papplet;
     SPEED = speed / 1000;
     START_TIME = PAPPLET.millis();
   }
   
-  public ProgressFeatureDrawer head(int size) {
+  public ProgressGeometryDrawer head(int size) {
     HEAD_SIZE = size;
     return this;
   }
