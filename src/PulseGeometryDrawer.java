@@ -5,30 +5,29 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.LineString;
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import ad.casadelamuntanya.model3d.feature.FeatureDrawer;
 
-public class PulseFeatureDrawer extends FeatureDrawer {
+public class PulseGeometryDrawer extends GeometryDrawer {
   
   protected final PApplet PAPPLET;
   protected final int SIZE;
   protected final int RADIUS;
-  protected float SPEED = 1;
-  protected float DUTY_CYCLE = 1;
+  protected float SPEED = 0.025f;
+  protected float DUTY_CYCLE = 0.5f;
   protected final int COLOR;
   
-  public PulseFeatureDrawer(PApplet papplet, int size, int radius, int paint) {
+  public PulseGeometryDrawer(PApplet papplet, int size, int radius, int paint) {
     PAPPLET = papplet;
     SIZE = size;
     RADIUS = radius;
     COLOR = paint;
   }
 
-  public PulseFeatureDrawer speed(float speed) {
+  public PulseGeometryDrawer speed(float speed) {
     SPEED = speed;
     return this;
   }
 
-  public PulseFeatureDrawer dutyCycle(float dutyCycle) {
+  public PulseGeometryDrawer dutyCycle(float dutyCycle) {
     DUTY_CYCLE = dutyCycle;
     return this;
   }
