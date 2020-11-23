@@ -57,6 +57,10 @@ public class Facade<T extends Drawable> implements Iterable<T>, Drawable {
     for (T item : ITEMS) item.setDrawer(drawer);
   }
   
+  public void setDrawer(Drawer drawer, Predicate filter) {
+    this.filter(filter).setDrawer(drawer);
+  }
+  
   @Override
   public void draw(PGraphics renderer) {
     for (T item : ITEMS) item.draw(renderer);

@@ -36,7 +36,7 @@ public class Feature implements Categorizable, Drawable {
   
   @Override
   public void draw(PGraphics renderer) {
-    drawer.draw(renderer, GEOMETRY);
+    if (drawer != null) drawer.draw(renderer, GEOMETRY);
   }
   
 }
