@@ -20,8 +20,8 @@ private final LatLon[] bounds = new LatLon[] {
   
 void setup() {
   fullScreen(P3D);
-  surface = new WarpSurface(this, "../_shared/warpsurface_20x20.xml");
-  canvas = new WarpCanvas(this, "../_shared/orto.png", bounds);
+  surface = new WarpSurface(this, "../data/warpsurface_20x20.xml");
+  canvas = new WarpCanvas(this, "../data/orto.png", bounds);
   
   SurfaceMapper mapper = new SurfaceMapper(surface);
   
@@ -43,11 +43,11 @@ void setup() {
   colors.put("ROCK", #999999);
   colors.put("SCREE", #999999);
   
-  landuses = factory.load("landuses.geojson");
+  landuses = factory.load("../data/landuses.geojson");
   landuses.setDrawer(new CategoryDrawer(new FeatureDrawer(), "sub_type", colors));
   
-  borders = factory.load("border.geojson");
-  borders.setDrawer(new ColorDrawer(new FeatureDrawer(), #ffffff, 3));
+  borders = factory.load("../data/border.geojson");
+  borders.setDrawer(new ColorDrawer(new FeatureDrawer(), #ffffff));
   
 }
 
