@@ -21,7 +21,7 @@ public class ScenesIteratorInterval extends ScenesIterator {
   public ScenesIteratorInterval(PApplet papplet, long interval, int keyPauseResume, ScenesIterable scenes) {
     super(scenes);
     PAPPLET = papplet;
-    INTERVAL = interval;
+    INTERVAL = interval * 1000;
     KEY_PAUSE_RESUME = keyPauseResume;
     papplet.registerMethod("keyEvent", this);
   }
@@ -34,7 +34,7 @@ public class ScenesIteratorInterval extends ScenesIterator {
 
   protected void run() {
     isRunning = true;
-    lastTime = System.nanoTime();
+    lastTime = PAPPLET.millis();
     final Runnable next = new Runnable() {
       public void run() {
         next();
@@ -65,7 +65,6 @@ public class ScenesIteratorInterval extends ScenesIterator {
     renderer.pushStyle();
     super.draw(renderer);
     if (isRunning) currentTime = PAPPLET.millis();
-    // long remaining = TimeUnit.MILLISECONDS.convert(currentTime - lastTime, TimeUnit.NANOSECONDS) - INTERVAL;
     long remaining = currentTime - lastTime - INTERVAL;
     renderer.fill(255);
     renderer.rect(1500, 1056, PApplet.map(remaining, 0, INTERVAL, 0, 1157), 2);
