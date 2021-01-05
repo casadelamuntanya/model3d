@@ -15,16 +15,19 @@ public class Facade<T extends Drawable> implements Iterable<T>, Drawable {
     return ITEMS.size();
   }
 
-  public void add(T... items) {
+  public Facade<T> add(T... items) {
     for (T item : items) ITEMS.add(item);
+		return this;
   }
   
-  public void add(Facade<T> facade) {
+  public Facade<T> add(Facade<T> facade) {
     for (T item : facade) ITEMS.add(item);
+		return this;
   }
   
-  public void remove(T... items) {
+  public Facade<T> remove(T... items) {
     for (T item : items) ITEMS.remove(item);
+		return this;
   }
   
   public Facade<T> filter(Predicate filter) {
@@ -42,8 +45,9 @@ public class Facade<T extends Drawable> implements Iterable<T>, Drawable {
     return null;
   }
   
-  public void sort(Comparator comparator) {
+  public Facade<T> sort(Comparator comparator) {
     Collections.sort(ITEMS, comparator);
+		return this;
   }
   
   @Override
