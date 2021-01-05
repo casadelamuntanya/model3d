@@ -1,5 +1,6 @@
-package ad.casadelamuntanya.model3d;
+package ad.casadelamuntanya.model3d.feature;
 
+import ad.casadelamuntanya.model3d.Drawer;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.Polygon;
@@ -9,7 +10,11 @@ import com.vividsolutions.jts.geom.Coordinate;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
-public class GeometryDrawer implements PConstants, Drawer<Geometry> {
+public class FeatureDrawer implements PConstants, Drawer<Feature> {
+
+	public void draw(PGraphics renderer, Feature feature) {
+		draw(renderer, feature.GEOMETRY);
+	}
 
   public void draw(PGraphics renderer, Geometry geometry) {
     if (geometry instanceof GeometryCollection) draw(renderer, (GeometryCollection) geometry);
@@ -17,13 +22,13 @@ public class GeometryDrawer implements PConstants, Drawer<Geometry> {
     else if (geometry instanceof LineString) draw(renderer, (LineString) geometry);
     else if (geometry instanceof Point) draw(renderer, (Point) geometry);
   }
-  
+
   protected void draw(PGraphics renderer, GeometryCollection geometry) {
     for (int i = 0; i < geometry.getNumGeometries(); i++) {
       draw(renderer, geometry.getGeometryN(i));
     }
   }
-  
+
   protected void draw(PGraphics renderer, Polygon geometry) {
     LineString shell = geometry.getExteriorRing();
     renderer.beginShape();
@@ -40,7 +45,7 @@ public class GeometryDrawer implements PConstants, Drawer<Geometry> {
     }
     renderer.endShape(CLOSE);
   }
-  
+
   protected void draw(PGraphics renderer, LineString geometry) {
     renderer.beginShape();
     renderer.noFill();
@@ -49,7 +54,7 @@ public class GeometryDrawer implements PConstants, Drawer<Geometry> {
     }
     renderer.endShape();
   }
-  
+
   protected void draw(PGraphics renderer, Point geometry) {
     Coordinate coordinate = geometry.getCoordinate();
     renderer.point((float)coordinate.x, (float)coordinate.y);

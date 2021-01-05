@@ -1,4 +1,4 @@
-package ad.casadelamuntanya.model3d;
+package ad.casadelamuntanya.model3d.feature;
 
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.LineString;
@@ -7,24 +7,24 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
 
-public class ProgressGeometryDrawer extends GeometryDrawer {
+public class ProgressFeatureDrawer extends FeatureDrawer {
 
   protected final PApplet PAPPLET;
   protected final float SPEED;
   protected final int START_TIME;
   protected int HEAD_SIZE = 0;
-  
-  public ProgressGeometryDrawer(PApplet papplet, float speed) {
+
+  public ProgressFeatureDrawer(PApplet papplet, float speed) {
     PAPPLET = papplet;
     SPEED = speed / 1000;
     START_TIME = PAPPLET.millis();
   }
-  
-  public ProgressGeometryDrawer head(int size) {
+
+  public ProgressFeatureDrawer head(int size) {
     HEAD_SIZE = size;
     return this;
   }
-  
+
   @Override
   protected void draw(PGraphics renderer, Polygon geometry) {
     final float DELAY = START_TIME + (float)geometry.getExteriorRing().getLength() / SPEED;
@@ -39,7 +39,7 @@ public class ProgressGeometryDrawer extends GeometryDrawer {
     }
     renderer.endShape(CLOSE);
   }
-  
+
   @Override
   protected void draw(PGraphics renderer, LineString geometry) {
     renderer.pushStyle();
@@ -54,7 +54,7 @@ public class ProgressGeometryDrawer extends GeometryDrawer {
     }
     renderer.popStyle();
   }
-  
+
   private PVector drawLineProgress(PGraphics renderer, LineString ring, float INIT_TIME) {
     final float RUN_DISTANCE = (PAPPLET.millis() - INIT_TIME) * SPEED;
     final boolean IS_FINISHED = RUN_DISTANCE > ring.getLength();
