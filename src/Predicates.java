@@ -17,5 +17,38 @@ public class Predicates {
       }
     };
   }
+  
+  public static Predicate and(final Predicate... predicates) {
+    return new Predicate() {
+      @Override
+      public boolean test(Object obj) {
+        for (Predicate predicate : predicates) {
+          if (!predicate.test(obj)) return false;
+        }
+        return true;
+      }
+    };
+  }
+  
+  public static Predicate or(final Predicate... predicates) {
+    return new Predicate() {
+      @Override
+      public boolean test(Object obj) {
+        for (Predicate predicate : predicates) {
+          if (predicate.test(obj)) return true;
+        }
+        return false;
+      }
+    };
+  }
+  
+  public static Predicate not(final Predicate predicate) {
+    return new Predicate() {
+      @Override
+      public boolean test(Object obj) {
+        return !predicate.test(obj);
+      }
+    };
+  }
 
 }
