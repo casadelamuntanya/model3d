@@ -5,14 +5,13 @@ import ad.casadelamuntanya.model3d.feature.*;
 import ad.casadelamuntanya.model3d.surface.*;
 import ad.casadelamuntanya.model3d.scene.*;
 import com.vividsolutions.jts.geom.CoordinateSequenceFilter;
-import com.vividsolutions.jts.geom.Geometry;
 import java.util.function.Predicate;
 
 WarpSurface surface;
 WarpCanvas canvas;
 
-int interval = 40;
-ScenesIterator scenes;
+final int SCENE_INTERVAL = 40;
+SceneCollection scenes;
 
 // Canvas bounds
 private final LatLon[] bounds = new LatLon[] {
@@ -23,7 +22,9 @@ private final LatLon[] bounds = new LatLon[] {
 };
 
 void setup() {
-  fullScreen(P3D);
+  // fullScreen(P3D);
+  size(600, 600, P3D);
+  frameRate(60);
 
   surface = new WarpSurface(this, "../data/warpsurface_20x20.xml");
   canvas = new WarpCanvas(this, "../data/orto.png", bounds);
@@ -40,7 +41,7 @@ void setup() {
   Facade<Feature> provisionings = factory.load("provisionings.geojson");
   provisionings.setDrawer(new PulseFeatureDrawer(this, 10, 50, #ff0000));
 
-  SceneCollection scenesCollection = new SceneCollection();
+  scenes = new SceneCollection();
 
   String[] trackIDs = new String[] { "skimo10", "skimo2", "skimo4", "skimo6" };
   for (String id : trackIDs) {
@@ -48,12 +49,19 @@ void setup() {
     Facade<Feature> features = new Facade()
       .add(snow)
       .add(provisionings.filter(isClose(track, 10)));
-    Scene scene = new TrackScene(this, track, features);
-    scenesCollection.add(scene);
+    scenes.add(new TrackScene(this, track, features));
   }
   
-  scenes = new ScenesIteratorInterval(this, interval, ' ', new ScenesIteratorKeyboard(this, LEFT, RIGHT, scenesCollection));
-  scenes.init();
+  // Switch scenes at a regular time interval
+  SceneIterator intervalIterator = new IntervalSceneIterator(this, SCENE_INTERVAL, ' ');
+  Drawer intervalDrawer = new IntervalLineDrawer(1500, 1056, 1157);
+  intervalIterator.setDrawer(intervalDrawer);
+  scenes.addIterator(intervalIterator);
+  
+  // Switch scenes on LEFT and RIGHT arrow key press
+  SceneIterator keyIterator = new KeySceneIterator(this, LEFT, RIGHT);
+  scenes.addIterator(keyIterator);
+  
 }
 
 void draw() {
