@@ -13,8 +13,10 @@ private final LatLon[] bounds = new LatLon[] {
   
 void setup() {
   fullScreen(P3D);
-  surface = new WarpSurface(this, "../examples/_shared/warpsurface_20x20.xml");
-  canvas = new WarpCanvas(this, "../examples/_shared/orto.png", bounds);
+  frameRate(60);
+
+  surface = new WarpSurface(this, "../examples/data/warpsurface_20x20.xml");
+  canvas = new WarpCanvas(this, "../examples/data/orto.png", bounds);
 }
 
 void draw() {

@@ -20,6 +20,8 @@ private final LatLon[] bounds = new LatLon[] {
   
 void setup() {
   fullScreen(P3D);
+  frameRate(60);
+
   surface = new WarpSurface(this, "../data/warpsurface_20x20.xml");
   canvas = new WarpCanvas(this, "../data/orto.png", bounds);
   
